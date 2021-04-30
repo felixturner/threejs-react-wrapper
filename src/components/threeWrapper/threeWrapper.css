@@ -1,0 +1,8 @@
+.webgl {
+  position: absolute;
+  top: 100px;
+  left: 5vw;
+  z-index: 1;
+  width: 90vw;
+  height: calc(90vh - 100px);
+}
