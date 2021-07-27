@@ -37,3 +37,7 @@ Your app is ready to be deployed!
 ## ScreenShot
 
 ![ScreenShot](./screen-shot.png 'ScreenShot')
+
+## TODO
+
+- handle async loading within ThreeWrapper (e.g load config data or assets before three init completes)

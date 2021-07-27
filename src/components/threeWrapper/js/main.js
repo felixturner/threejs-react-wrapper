@@ -21,9 +21,9 @@ console.log('THREE version', THREE.REVISION);
 
 let scene, camera, renderer, cube, controls, stats, domElement, raf;
 
-export function init() {
+export function init(canvas) {
   console.log('threejs init');
-  domElement = document.querySelector('.webgl');
+  domElement = document.querySelector('#canvas-container');
   stats = new Stats();
   domElement.appendChild(stats.dom);
   stats.dom.style.position = 'absolute';
@@ -37,9 +37,8 @@ export function init() {
   );
   camera.position.z = 3;
 
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({ canvas: canvas });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  domElement.appendChild(renderer.domElement);
 
   let geometry = new THREE.BoxGeometry(1, 1, 1);
   let material = new THREE.MeshBasicMaterial({
@@ -83,10 +82,6 @@ export function dispose() {
   window.removeEventListener('resize', onResize, false);
   cancelAnimationFrame(raf);
   controls.dispose();
-
-  //canvas dom element is automatically removed during umnmount, however
-  //this is required to prevent hot-reloads from spawning multiple renderers
-  domElement.removeChild(renderer.domElement);
 
   scene = null;
   camera = null;
