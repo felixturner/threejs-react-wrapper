@@ -1,4 +1,3 @@
-import './App.css';
 import { useControls } from 'leva';
 import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
 

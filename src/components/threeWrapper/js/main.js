@@ -1,20 +1,13 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Stats from 'three/addons/libs/stats.module.js';
 
 import testcard from '../assets/testcard.jpg';
 
 /*
-
-  Main Three.js code
-
-	A rotating cube with orbit controls and stats. This is a vanilla JS ES6 module, 
-  as used in the threejs examples. threejs loaded via NPM.
-
-  Assets can be loaded via imports (see testcard above), or directly from 
-  public folder by using something like: process.env.PUBLIC_URL + '/assets/testcard.jpg'
-  https://create-react-app.dev/docs/using-the-public-folder/
-  
+  Main Three.js code. A rotating cube with orbit controls and stats. 
+  This is a vanilla JS ES6 module, as used in the threejs examples. 
+  Assets can be loaded via imports (see testcard.jpg above).
 */
 
 console.log('THREE version', THREE.REVISION);
@@ -58,15 +51,9 @@ export function init(canvas) {
 }
 
 function update() {
-  //console.log('threejs update');
   raf = requestAnimationFrame(update);
-
-  //if (speed !== undefined) {
-  //console.log(cube.rotation.x, props.props.speedX);
   cube.rotation.x += Number(props.speedX) / 20;
   cube.rotation.y += Number(props.speedY) / 20;
-  //}
-  // cube.rotation.y += speed / 10;
   renderer.render(scene, camera);
   stats.update();
   controls.update();
