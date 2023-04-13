@@ -1,6 +1,6 @@
 import './App.css';
-import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
 import { useControls } from 'leva';
+import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
 
 function WrapperWithControls() {
   const { speedX, speedY, scale, mounted } = useControls({
