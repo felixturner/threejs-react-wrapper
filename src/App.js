@@ -8,7 +8,7 @@ import { useControls } from 'leva';
 */
 
 function MyComponent() {
-  const { speedX, speedY } = useControls({
+  const { speedX, speedY, scale } = useControls({
     speedX: {
       value: 0.15,
       min: 0,
@@ -21,8 +21,16 @@ function MyComponent() {
       max: 0.3,
       step: 0.01,
     },
+    scale: {
+      value: 1,
+      min: 0.5,
+      max: 4,
+      step: 0.1,
+    },
   });
-  return <ThreeWrapper props={{ speedX: speedX, speedY: speedY }} />;
+  return (
+    <ThreeWrapper props={{ speedX: speedX, speedY: speedY, scale: scale }} />
+  );
 }
 
 function App() {

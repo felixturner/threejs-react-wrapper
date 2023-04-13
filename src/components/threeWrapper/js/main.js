@@ -21,7 +21,7 @@ console.log('THREE version', THREE.REVISION);
 
 let scene, camera, renderer, cube, controls, stats, domElement, raf;
 
-let props = { props: { speedX: 0, speedY: 0 } };
+let props = { speedX: 0, speedY: 0 };
 
 export function init(canvas) {
   console.log('threejs init');
@@ -63,8 +63,8 @@ function update() {
 
   //if (speed !== undefined) {
   //console.log(cube.rotation.x, props.props.speedX);
-  cube.rotation.x += Number(props.props.speedX) / 10;
-  cube.rotation.y += Number(props.props.speedY) / 10;
+  cube.rotation.x += Number(props.speedX) / 20;
+  cube.rotation.y += Number(props.speedY) / 20;
   //}
   // cube.rotation.y += speed / 10;
   renderer.render(scene, camera);
@@ -98,6 +98,7 @@ export function dispose() {
 }
 
 export function setProps(_props) {
-  console.log('setProps', _props);
+  //console.log('setProps', _props);
   props = _props;
+  cube.scale.setScalar(props.scale);
 }

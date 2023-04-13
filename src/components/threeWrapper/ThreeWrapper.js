@@ -19,9 +19,8 @@ export function ThreeWrapper(props) {
     };
   }, []); // <-- this empty array makes useEffect only run once
   useEffect(() => {
-    console.log('useEffect', props);
     //do on mount
-    setProps(props);
+    setProps(props.props); //not sure why this is nested?
   }, [props]);
   return (
     <div id="canvas-container">
