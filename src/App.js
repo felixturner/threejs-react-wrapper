@@ -1,21 +1,34 @@
-import { useState } from 'react';
 import './App.css';
 import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
+import { useControls } from 'leva';
 
 /*
   This App.js conditionally adds/removes a ThreeWrapper component 
   based on the threeLoaded state variable
 */
 
-function App() {
-  const [threeLoaded, setThreeLoaded] = useState(false);
+function MyComponent() {
+  const { speedX, speedY } = useControls({
+    speedX: {
+      value: 0.15,
+      min: 0,
+      max: 0.3,
+      step: 0.01,
+    },
+    speedY: {
+      value: 0.15,
+      min: 0,
+      max: 0.3,
+      step: 0.01,
+    },
+  });
+  return <ThreeWrapper props={{ speedX: speedX, speedY: speedY }} />;
+}
 
+function App() {
   return (
     <div className="App">
-      <button onClick={() => setThreeLoaded(!threeLoaded)}>
-        <h3>{!threeLoaded ? 'Load' : 'Unload'} Threejs</h3>
-      </button>
-      {threeLoaded && <ThreeWrapper />}
+      <MyComponent />
     </div>
   );
 }

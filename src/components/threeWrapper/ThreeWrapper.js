@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { init, dispose } from './js/main.js';
+import { init, dispose, setProps } from './js/main.js';
 import './threeWrapper.css';
 
 /*
@@ -8,7 +8,7 @@ import './threeWrapper.css';
 
 */
 
-export function ThreeWrapper() {
+export function ThreeWrapper(props) {
   const glCanvas = useRef(); //ref to webgl canvas
   useEffect(() => {
     //do on mount
@@ -18,6 +18,11 @@ export function ThreeWrapper() {
       dispose();
     };
   }, []); // <-- this empty array makes useEffect only run once
+  useEffect(() => {
+    console.log('useEffect', props);
+    //do on mount
+    setProps(props);
+  }, [props]);
   return (
     <div id="canvas-container">
       <canvas ref={glCanvas} />
