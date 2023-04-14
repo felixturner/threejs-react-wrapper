@@ -3,6 +3,7 @@ import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
 
 function WrapperWithControls() {
   const { speedX, speedY, scale, mounted } = useControls({
+    mounted: true,
     speedX: {
       value: 0.15,
       min: 0,
@@ -21,7 +22,6 @@ function WrapperWithControls() {
       max: 4,
       step: 0.1,
     },
-    mounted: true,
   });
   return (
     <>

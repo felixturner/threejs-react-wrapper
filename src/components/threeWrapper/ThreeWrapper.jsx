@@ -19,7 +19,6 @@ export function ThreeWrapper(props) {
     };
   }, []); // <-- this empty array makes useEffect only run once
   useEffect(() => {
-    //do on mount
     setProps(props.props); //not sure why this is nested?
   }, [props]);
   return (
