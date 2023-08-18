@@ -12,7 +12,7 @@ import testcard from '../assets/testcard.jpg';
 
 console.log('THREE version', THREE.REVISION);
 
-let scene, camera, renderer, cube, controls, stats, domElement, raf;
+let scene, camera, renderer, cube, controls, stats, domElement, raf, resizeObs;
 
 let props = { speedX: 0, speedY: 0 };
 
@@ -24,16 +24,12 @@ export function init(canvas) {
   stats.dom.style.position = 'absolute';
 
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 3;
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 
   let geometry = new THREE.BoxGeometry(1, 1, 1);
   let material = new THREE.MeshBasicMaterial({
@@ -44,8 +40,10 @@ export function init(canvas) {
 
   controls = new OrbitControls(camera, domElement);
 
-  //resize
-  window.addEventListener('resize', onResize);
+  //watch for size change of domElement
+  resizeObs = new ResizeObserver(onResize);
+  resizeObs.observe(domElement);
+
   onResize();
   update();
 }
@@ -60,7 +58,7 @@ function update() {
 }
 
 function onResize() {
-  console.log('threejs onResize');
+  console.log('threejs onResize', performance.now());
   let w = domElement.offsetWidth;
   let h = domElement.offsetHeight;
   camera.aspect = w / h;
@@ -73,10 +71,10 @@ export function dispose() {
   console.log('threejs dispose');
 
   //clean up any event listeners etc
-  window.removeEventListener('resize', onResize, false);
   cancelAnimationFrame(raf);
   controls.dispose();
-
+  resizeObs.disconnect();
+  resizeObs = null;
   scene = null;
   camera = null;
   controls = null;
