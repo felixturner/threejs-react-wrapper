@@ -56,7 +56,7 @@ function update() {
 }
 
 function onResize() {
-  console.log('threejs onResize', performance.now());
+  console.log('threejs onResize');
   let w = domElement.offsetWidth;
   let h = domElement.offsetHeight;
   camera.aspect = w / h;
