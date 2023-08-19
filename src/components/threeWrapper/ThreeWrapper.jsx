@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { init, dispose, setProps } from './js/main.js';
 import './threeWrapper.css';
 

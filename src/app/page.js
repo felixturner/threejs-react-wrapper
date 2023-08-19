@@ -1,5 +1,7 @@
+'use client';
+
 import { useControls } from 'leva';
-import { ThreeWrapper } from './components/threeWrapper/ThreeWrapper';
+import { ThreeWrapper } from '@/components/threeWrapper/ThreeWrapper';
 
 function WrapperWithControls() {
   const { speedX, speedY, scale, mounted } = useControls({
@@ -23,23 +25,13 @@ function WrapperWithControls() {
       step: 0.1,
     },
   });
-  return (
-    <>
-      {mounted && (
-        <ThreeWrapper
-          props={{ speedX: speedX, speedY: speedY, scale: scale }}
-        />
-      )}
-    </>
-  );
+  return <>{mounted && <ThreeWrapper props={{ speedX: speedX, speedY: speedY, scale: scale }} />}</>;
 }
 
-function App() {
+export default function Home() {
   return (
     <div className="App">
       <WrapperWithControls />
     </div>
   );
 }
-
-export default App;

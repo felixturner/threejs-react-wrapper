@@ -1,23 +1,20 @@
 {
   "name": "threejs-react-wrapper",
-  "license": "MIT",
-  "version": "0.0.0",
-  "type": "module",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.0.4",
-    "leva": "^0.9.34",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.18",
+    "leva": "^0.9.35",
+    "next": "13.4.18",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "three": "^0.155.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "vite": "^4.2.0"
   }
 }

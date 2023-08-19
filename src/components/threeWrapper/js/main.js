@@ -2,8 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
 
-import testcard from '../assets/testcard.jpg';
-
 /*
   Main Three.js code. A rotating cube with orbit controls and stats. 
   This is a vanilla JS ES6 module, as used in the threejs examples. 
@@ -33,7 +31,7 @@ export function init(canvas) {
 
   let geometry = new THREE.BoxGeometry(1, 1, 1);
   let material = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load(testcard),
+    map: new THREE.TextureLoader().load('/testcard.jpg'),
   });
   cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
