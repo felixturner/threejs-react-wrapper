@@ -1,57 +1,70 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
-
 import testcard from '../assets/testcard.jpg';
 
 /*
   Main Three.js code. A rotating cube with orbit controls and stats. 
   This is a vanilla JS ES6 module, as used in the threejs examples. 
+  Handles resizing to containerElement, init and disposal.
   Assets can be loaded via imports (see testcard.jpg above).
 */
 
 console.log('THREE version', THREE.REVISION);
 
-let scene, camera, renderer, cube, controls, stats, domElement, raf, resizeObs;
+let scene,
+  camera,
+  renderer,
+  cube,
+  controls,
+  stats,
+  containerEl,
+  raf,
+  resizeObs,
+  material;
 
-let props = { speedX: 0, speedY: 0 };
+let speed = 0;
 
-export function init(canvas) {
+export function init(canvas, _containerEl) {
   console.log('threejs init');
-  domElement = document.querySelector('#canvas-container');
+  containerEl = _containerEl;
   stats = new Stats();
-  domElement.appendChild(stats.dom);
+  containerEl.appendChild(stats.dom);
   stats.dom.style.position = 'absolute';
 
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
   camera.position.z = 3;
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 
-  let geometry = new THREE.BoxGeometry(1, 1, 1);
-  let material = new THREE.MeshBasicMaterial({
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  material = new THREE.MeshBasicMaterial({
     map: new THREE.TextureLoader().load(testcard),
   });
   cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
-  controls = new OrbitControls(camera, domElement);
+  controls = new OrbitControls(camera, containerEl);
 
-  //watch for size change of domElement
+  //watch for size change of container element
   resizeObs = new ResizeObserver(onResize);
-  resizeObs.observe(domElement);
+  resizeObs.observe(containerEl);
 
-  onResize();
   update();
 }
 
 function update() {
   raf = requestAnimationFrame(update);
-  cube.rotation.x += Number(props.speedX) / 20;
-  cube.rotation.y += Number(props.speedY) / 20;
+  cube.rotation.x += speed / 40;
+  cube.rotation.y += speed / 40;
   renderer.render(scene, camera);
   stats.update();
   controls.update();
@@ -59,31 +72,33 @@ function update() {
 
 function onResize() {
   console.log('threejs onResize');
-  let w = domElement.offsetWidth;
-  let h = domElement.offsetHeight;
+  let w = containerEl.offsetWidth;
+  let h = containerEl.offsetHeight;
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   renderer.setSize(w, h);
   renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.render(scene, camera);
 }
 
 export function dispose() {
   console.log('threejs dispose');
-
-  //clean up any event listeners etc
+  //clean up
   cancelAnimationFrame(raf);
-  controls.dispose();
   resizeObs.disconnect();
+  controls.dispose();
+  material.dispose();
+  cube.geometry.dispose();
   resizeObs = null;
   scene = null;
   camera = null;
   controls = null;
   renderer = null;
   stats = null;
+  material = null;
 }
 
-export function setProps(_props) {
-  //console.log('setProps', _props);
-  props = _props;
+export function setProps(props) {
+  speed = props.speed;
   cube.scale.setScalar(props.scale);
 }

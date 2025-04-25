@@ -1,28 +1,30 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { init, dispose, setProps } from './js/main.js';
-import './threeWrapper.css';
 
 /*
-
-  A simple functional component to mount and unmount threejs scene
-
+  A simple React component to mount and unmount a ThreeJS scene
 */
 
 export function ThreeWrapper(props) {
   const glCanvas = useRef(); //ref to webgl canvas
+  const glContainer = useRef(); //ref to webgl canvas container
+
   useEffect(() => {
     //do on mount
-    init(glCanvas.current);
+    init(glCanvas.current, glContainer.current);
     return () => {
       //do on unmount
       dispose();
     };
-  }, []); // <-- this empty array makes useEffect only run once
+  }, []); // run once on page load
+
   useEffect(() => {
-    setProps(props.props); //not sure why this is nested?
+    //when props change, send into webgl
+    setProps(props);
   }, [props]);
+
   return (
-    <div id="canvas-container">
+    <div ref={glContainer} className="gl-container">
       <canvas ref={glCanvas} />
     </div>
   );

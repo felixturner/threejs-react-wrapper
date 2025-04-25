@@ -1,0 +1,18 @@
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gl-container {
+  width: 80vw;
+  height: 80vh;
+  border-radius: 10px;
+  overflow: hidden;
+}
